@@ -6,10 +6,10 @@ on:
     branches:
       - main
     paths:
-      - 'src/Inpackages.Domain/**'
+      - 'packages/Inpackages.Domain/**'
 
 jobs:
   setup:
-    uses: ./.github/workflows/setup.yaml
+    uses: ./.github/workflows/setup.yml
     with:
       gitversion: '6.3.0'
