@@ -12,7 +12,7 @@ on:
       - 'src/Inpackages.Domain/**'
 
 jobs:
-    setup:
-      uses: ./.github/workflows/setup.yaml
-      with:
-        gitversion: ${{ env.GITVERSION }}
+  setup:
+    uses: ./.github/workflows/setup.yaml
+    with:
+      gitversion: ${{ env.GITVERSION }}

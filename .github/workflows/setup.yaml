@@ -9,22 +9,22 @@ on:
     outputs:
       BRANCH_NAME:
         description: 'Branch name'
-        value: ${{ steps.variables.outputs.branch_name }}
+        value: ${{ jobs.gitversion.outputs.BRANCH_NAME }}
       SEMVER:
         description: 'Semantic version'
-        value: ${{ steps.variables.outputs.semver }}
+        value: ${{ jobs.gitversion.outputs.SEMVER }}
       FULL_SEMVER:
         description: 'Full semantic version'
-        value: ${{ steps.variables.outputs.full_semver }}
+        value: ${{ jobs.gitversion.outputs.FULL_SEMVER }}
       MAJOR_MINOR_PATCH:
         description: 'Major minor patch version'
-        value: ${{ steps.variables.outputs.major_minor_patch }}
+        value: ${{ jobs.gitversion.outputs.MAJOR_MINOR_PATCH }}
       MERGE:
         description: 'Indicates if the pull request was merged into main or release branches'
-        value: ${{ steps.variables.outputs.merge }}
+        value: ${{ jobs.gitversion.outputs.MERGE }}
         
 jobs:
-  setup:
+  gitversion:
     runs-on: ubuntu-latest
     outputs:
       BRANCH_NAME: ${{ steps.variables.outputs.branch_name }}
