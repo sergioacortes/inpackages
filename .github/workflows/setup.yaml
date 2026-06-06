@@ -1,0 +1,74 @@
+on:
+  workflow_call:
+    inputs:
+      gitversion:
+        description: 'GitVersion version to use'
+        type: string
+        required: true
+        default: '6.3.0'
+    outputs:
+      BRANCH_NAME:
+        description: 'Branch name'
+        value: ${{ steps.variables.outputs.branch_name }}
+      SEMVER:
+        description: 'Semantic version'
+        value: ${{ steps.variables.outputs.semver }}
+      FULL_SEMVER:
+        description: 'Full semantic version'
+        value: ${{ steps.variables.outputs.full_semver }}
+      MAJOR_MINOR_PATCH:
+        description: 'Major minor patch version'
+        value: ${{ steps.variables.outputs.major_minor_patch }}
+      MERGE:
+        description: 'Indicates if the pull request was merged into main or release branches'
+        value: ${{ steps.variables.outputs.merge }}
+        
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      BRANCH_NAME: ${{ steps.variables.outputs.branch_name }}
+      SEMVER: ${{ steps.variables.outputs.semver }}
+      FULL_SEMVER: ${{ steps.variables.outputs.full_semver }}
+      MAJOR_MINOR_PATCH: ${{ steps.variables.outputs.major_minor_patch }}
+      MERGE: ${{ steps.variables.outputs.merge }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v4.0.1
+        with:
+          versionSpec: ${{ inputs.gitversion }}
+
+      - name: Execute GitVersion
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v4.0.1
+
+      - name: Set output
+        id: variables
+        run: |
+          echo "branch_name=$(echo ${{ steps.gitversion.outputs.GitVersion_BranchName }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "semver=$(echo ${{ steps.gitversion.outputs.GitVersion_SemVer }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "full_semver=$(echo ${{ steps.gitversion.outputs.GitVersion_FullSemVer }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "major_minor_patch=$(echo ${{ steps.gitversion.outputs.GitVersion_MajorMinorPatch }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_OUTPUT
+          echo "merge=$(echo ${{ (startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/release')) && github.event_name == 'pull_request' && github.event.action == 'closed' }})" >> $GITHUB_OUTPUT
+
+      - name: Print versioning
+        id: print_versioning
+        run: |
+          echo ${{ steps.variables.outputs.branch_name }}
+          echo ${{ steps.variables.outputs.semver }}
+          echo ${{ steps.variables.outputs.full_semver }}
+          echo ${{ steps.variables.outputs.major_minor_patch }}
+          echo ${{ steps.variables.outputs.merge }}
+
+      - name: Create and push tag
+        if: ${{ steps.variables.outputs.merge == 'true' }}
+        run: |
+          git tag ${{ steps.variables.outputs.major_minor_patch }}
+          git push origin ${{ steps.variables.outputs.major_minor_patch }}
