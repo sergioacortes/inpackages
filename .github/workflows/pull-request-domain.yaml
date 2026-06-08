@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/**.csproj'
+      - 'src/InPackages.Domain/**'
 
 jobs:
   setup:
