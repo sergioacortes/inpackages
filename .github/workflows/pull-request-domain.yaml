@@ -1,7 +1,6 @@
 name: Inpackages Domain - Pull request
 
 on:
-  workflow_dispatch: 
   pull_request:
     types: [ opened, synchronize, reopened, closed ]
     branches:
