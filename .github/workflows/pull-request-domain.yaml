@@ -1,12 +1,11 @@
 name: Inpackages Domain - Pull request
 
 on:
+  workflow_run: 
   pull_request:
     types: [ opened, synchronize, reopened, closed ]
     branches:
       - main
-    paths:
-      - 'packages/Inpackages.Domain/**'
 
 jobs:
   setup:
