@@ -9,6 +9,7 @@ on:
 
 jobs:
   setup:
-    uses: setup.yml
+    name: 'Setup'
+    uses: ./.github/workflows/setup.yaml
     with:
       gitversion: '6.3.0'
