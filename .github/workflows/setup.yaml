@@ -35,7 +35,7 @@ jobs:
       MAJOR_MINOR_PATCH: ${{ steps.variables.outputs.major_minor_patch }}
       MERGE: ${{ steps.variables.outputs.merge }}
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
