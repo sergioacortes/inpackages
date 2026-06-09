@@ -12,3 +12,5 @@ jobs:
   setup:
     name: 'Setup'
     uses: ./.github/workflows/setup.yaml
+    with: 
+      label-prefix: 'Domain@'
