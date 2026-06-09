@@ -1,5 +1,8 @@
 name: Inpackages Domain - Pull request
 
+env:
+  GITVERSION: '6.3.0'
+
 on:
   pull_request:
     types: [ opened, synchronize, reopened, closed ]
@@ -13,4 +16,4 @@ jobs:
     name: 'Setup'
     uses: ./.github/workflows/setup.yaml
     with:
-      gitversion: '6.3.0'
+      gitversion: ${{ env.GITVERSION }}
