@@ -6,7 +6,6 @@ on:
       gitversion:
         description: 'GitVersion version to use'
         type: string
-        required: true
         default: '6.3.0'
     outputs:
       BRANCH_NAME:
