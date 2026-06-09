@@ -1,14 +1,16 @@
 name: Inpackages Domain - Pull request
 
 on:
-  workflow_dispatch: 
   pull_request:
     types: [ opened, synchronize, reopened, closed ]
     branches:
       - main
+    paths:
+      - 'src/InPackages.Domain/**'
 
 jobs:
   setup:
-    uses: ./.github/workflows/setup.yml
-    with:
-      gitversion: '6.3.0'
+    name: 'Setup'
+    uses: ./.github/workflows/setup.yaml
+    with: 
+      label-prefix: 'Domain@'

@@ -6,8 +6,13 @@ on:
       gitversion:
         description: 'GitVersion version to use'
         type: string
-        required: true
         default: '6.3.0'
+      
+      label-prefix:
+        description: 'Label prefix to use for pre-release versions'
+        type: string
+        required: true
+      
     outputs:
       BRANCH_NAME:
         description: 'Branch name'
@@ -35,21 +40,23 @@ jobs:
       MAJOR_MINOR_PATCH: ${{ steps.variables.outputs.major_minor_patch }}
       MERGE: ${{ steps.variables.outputs.merge }}
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.3
         with:
           fetch-depth: 0
 
       - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v4.0.1
+        uses: gittools/actions/gitversion/setup@v4.5.0
         with:
           versionSpec: ${{ inputs.gitversion }}
-
+          
       - name: Execute GitVersion
         id: gitversion
-        uses: gittools/actions/gitversion/execute@v4.0.1
+        uses: gittools/actions/gitversion/execute@v4.5.0
+        with:
+          overrideConfig: '/overrideconfig label-prefix=${{ inputs.label-prefix }}'
 
       - name: Set output
         id: variables
