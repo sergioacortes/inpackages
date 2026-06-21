@@ -56,7 +56,7 @@ jobs:
         id: gitversion
         uses: gittools/actions/gitversion/execute@v4.5.0
         with:
-          overrideConfig: '/overrideconfig label-prefix=${{ inputs.label-prefix }}'
+          overrideConfig: '/overrideconfig tag-prefix=${{ inputs.label-prefix }}'
 
       - name: Set output
         id: variables
@@ -80,4 +80,4 @@ jobs:
         if: ${{ steps.variables.outputs.merge == 'true' }}
         run: |
           git tag ${{ steps.variables.outputs.major_minor_patch }}
-          git push origin ${{ steps.variables.outputs.major_minor_patch }}
+          git push origin ${{ steps.variables.outputs.major_minor_patch }}  
