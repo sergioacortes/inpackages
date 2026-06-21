@@ -1,0 +1,92 @@
+mode: ContinuousDelivery
+commit-message-incrementing: enabled
+
+branches:
+  release:
+    mode: ContinuousDelivery
+    regex: ^release?
+    label: 'rc'
+    increment: Patch
+    prevent-increment-of-merged-branch-version: false
+    tracks-release-branches: false
+    track-merge-target: false
+    source-branches:
+      - main
+      - hotfix
+    is-release-branch: true
+    is-mainline: false
+
+  main:
+    mode: ContinuousDelivery
+    regex: ^main$
+    prevent-increment-of-merged-branch-version: true
+    label: 'rc'
+    tracks-release-branches: false
+    track-merge-target: true
+    increment: Minor
+    is-release-branch: false
+    is-mainline: true
+    source-branches: []
+    pre-release-weight: 60000
+
+  hotfix:
+    mode: ContinuousDelivery
+    regex: ^hotfix?
+    prevent-increment-of-merged-branch-version: false
+    label: hotfix
+    tracks-release-branches: true
+    track-merge-target: true
+    increment: Patch
+    is-release-branch: false
+    is-mainline: false
+    source-branches:
+      - main
+      - release
+    pre-release-weight: 30000
+
+  pull-request:
+    mode: ContinuousDeployment
+    label: 'PR'
+    increment: Inherit
+    regex: ^pull?
+    is-release-branch: false
+    prevent-increment-of-merged-branch-version: false
+    is-mainline: false
+    tracks-release-branches: false
+    track-merge-target: false
+    source-branches:
+      - feature
+      - hotfix
+      - main
+      - release
+    pre-release-weight: 30000
+  
+  feature:
+    mode: ContinuousDeployment
+    label: useBranchName
+    increment: Inherit
+    regex: ^feature?
+    is-release-branch: false
+    prevent-increment-of-merged-branch-version: false
+    is-mainline: false
+    tracks-release-branches: false
+    track-merge-target: true
+    source-branches:
+      - feature
+      - hotfix
+      - main
+      - release
+    pre-release-weight: 30000
+
+  tags:
+    mode: ContinuousDelivery
+    label: 'rc'
+    increment: Minor
+    regex: ^.+@[\d.]+
+    is-release-branch: true
+    prevent-increment-of-merged-branch-version: false
+    is-mainline: false
+    tracks-release-branches: false
+    track-merge-target: true
+    source-branches: []
+    pre-release-weight: 30000
