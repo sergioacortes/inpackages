@@ -1,8 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5F899F7F-C26C-49EA-9799-02BDF765DA61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F766E4FA-6209-48F2-9AC0-681326D18C04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{DC8C4BB1-E816-46FA-8223-F0B51F43B601}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.github\workflows\pull-request-domain.yaml = ..\..\.github\workflows\pull-request-domain.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InPackages.Domain", "InPackages.Domain\InPackages.Domain.csproj", "{41E8E879-ED31-4B32-9E74-E68A1B86F406}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DC8C4BB1-E816-46FA-8223-F0B51F43B601} = {F766E4FA-6209-48F2-9AC0-681326D18C04}
+		{41E8E879-ED31-4B32-9E74-E68A1B86F406} = {5F899F7F-C26C-49EA-9799-02BDF765DA61}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41E8E879-ED31-4B32-9E74-E68A1B86F406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E8E879-ED31-4B32-9E74-E68A1B86F406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E8E879-ED31-4B32-9E74-E68A1B86F406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E8E879-ED31-4B32-9E74-E68A1B86F406}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
